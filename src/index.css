@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-ivory: #FAF8F5;
+    --color-cream: #F4EFEA;
+    --color-border: #E8E1D7;
+    --color-charcoal: #1C1714;
+    --color-charcoal-muted: #524741;
+    --color-gold: #C8A25D;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #FAF8F5;
+    color: #1C1714;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .font-brand {
+    font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  }
+}
+
+/* Subtle, Minimalist Accents */
+.gold-border-subtle {
+  border-color: #E8E1D7;
+}
+
+.soft-shadow {
+  box-shadow: 0 4px 20px -2px rgba(28, 23, 20, 0.04), 0 2px 6px -1px rgba(28, 23, 20, 0.02);
+}
+
+.luxury-shadow-hover {
+  transition: all 0.3s ease;
+}
+
+.luxury-shadow-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -4px rgba(28, 23, 20, 0.08);
+}
+
+/* Clean Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8D0C5;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B8AFA2;
+}

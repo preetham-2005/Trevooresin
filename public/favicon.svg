@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F6E7C1"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#996515"/>
+    </linearGradient>
+    <radialGradient id="resinShine" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#D4AF37" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#2C1F18" stop-opacity="0.9"/>
+    </radialGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" fill="#1C140F" stroke="url(#goldGrad)" stroke-width="3"/>
+  <circle cx="50" cy="50" r="42" fill="url(#resinShine)"/>
+  <text x="50" y="62" font-family="'Cinzel', 'Playfair Display', serif" font-size="34" font-weight="700" fill="url(#goldGrad)" text-anchor="middle" letter-spacing="1">T</text>
+</svg>
