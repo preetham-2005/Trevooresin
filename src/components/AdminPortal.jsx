@@ -121,29 +121,49 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
   };
 
   const handleExportCSV = () => {
-    const headers = ['ID', 'Date', 'Client Name', 'Phone', 'Email', 'Category', 'Timeline', 'Budget', 'Status', 'Details', 'Notes'];
-    const rows = enquiries.map(e => [
-      `"${e.id}"`,
-      `"${new Date(e.createdAt).toLocaleDateString()}"`,
-      `"${(e.clientName || '').replace(/"/g, '""')}"`,
-      `"${(e.phone || '').replace(/"/g, '""')}"`,
-      `"${(e.email || '').replace(/"/g, '""')}"`,
-      `"${(e.category || '').replace(/"/g, '""')}"`,
-      `"${(e.timeline || '').replace(/"/g, '""')}"`,
-      `"${(e.budget || '').replace(/"/g, '""')}"`,
-      `"${(e.status || '').replace(/"/g, '""')}"`,
-      `"${(e.details || '').replace(/"/g, '""')}"`,
-      `"${(e.notes || '').replace(/"/g, '""')}"`
-    ]);
+    try {
+      if (!enquiries || enquiries.length === 0) {
+        alert('No orders available to export.');
+        return;
+      }
 
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `Trevooresin_Orders_${new Date().toISOString().slice(0,10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      const headers = ['Order ID', 'Date', 'Client Name', 'Phone', 'Email', 'Category', 'Budget', 'Timeline', 'Status', 'Details', 'Notes'];
+      const rows = enquiries.map(e => [
+        e.id || '',
+        e.createdAt ? new Date(e.createdAt).toLocaleDateString('en-IN') : '',
+        e.clientName || '',
+        e.phone || '',
+        e.email || '',
+        e.category || '',
+        e.budget || '',
+        e.neededBy || e.timeline || '',
+        e.status || '',
+        (e.details || '').replace(/\r?\n/g, ' '),
+        (e.notes || '').replace(/\r?\n/g, ' ')
+      ]);
+
+      const csvString = [
+        headers.map(h => `"${String(h).replace(/"/g, '""')}"`).join(','),
+        ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+      ].join('\r\n');
+
+      // Prepend UTF-8 BOM so Excel opens Hindi, special characters, and numbers cleanly
+      const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `Trevooresin_Orders_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }, 200);
+    } catch (err) {
+      console.error('Export CSV error:', err);
+      alert('Unable to export: ' + (err.message || err));
+    }
   };
 
   const filteredEnquiries = enquiries.filter(item => {

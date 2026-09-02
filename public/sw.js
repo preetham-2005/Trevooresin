@@ -1,11 +1,15 @@
 // Trevooresin Service Worker for PWA App Installation
-const CACHE_NAME = 'trevooresin-v1';
+const CACHE_NAME = 'trevooresin-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/assets/trevoo_resin_logo.jpg',
-  '/pwa-icon.svg'
+  '/icon-192.png',
+  '/icon-512.png',
+  '/icon-maskable-192.png',
+  '/icon-maskable-512.png',
+  '/apple-touch-icon.png',
+  '/assets/trevoo_resin_logo.jpg'
 ];
 
 self.addEventListener('install', (event) => {

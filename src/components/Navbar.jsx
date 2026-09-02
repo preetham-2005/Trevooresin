@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Compass, Lock, MessageCircle, Download } from 'lucide-react';
+import { CreditCard, MessageCircle, Download } from 'lucide-react';
 
-export default function Navbar({ activeView, setActiveView, onOpenAdmin, enquiryCount }) {
+export default function Navbar({ onOpenAdmin, enquiryCount }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
-      // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
-      // Stash the event so it can be triggered later.
       setDeferredPrompt(e);
       setIsInstallable(true);
     };
@@ -29,7 +27,7 @@ export default function Navbar({ activeView, setActiveView, onOpenAdmin, enquiry
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
-      alert('To install the app in Chrome, tap the 3-dots menu in Chrome and select "Install app"!');
+      alert('To install the app on Chrome, open Chrome menu (⋮) and tap "Install app"!');
       return;
     }
     deferredPrompt.prompt();
@@ -41,94 +39,73 @@ export default function Navbar({ activeView, setActiveView, onOpenAdmin, enquiry
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#FAF5EC]/95 backdrop-blur-sm border-b border-[#E8DFC8] transition-all duration-300">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full max-w-full bg-[#FAF5EC]/95 backdrop-blur-sm border-b border-[#E8DFC8] transition-all duration-300">
+      <div className="max-w-5xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 overflow-hidden">
         
         {/* Brand Logo & Name */}
         <button 
-          onClick={() => { setActiveView('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          className="text-left group cursor-pointer flex items-center gap-2.5"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="text-left group cursor-pointer flex items-center gap-2 sm:gap-2.5 shrink-0"
         >
           <img
             src="/assets/trevoo_resin_logo.jpg"
             alt="Trevooresin Studio Logo"
-            className="w-9 h-9 rounded-full object-cover border border-[#E8DFC8]"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover border border-[#E8DFC8]"
           />
           <div>
-            <span className="font-brand text-lg sm:text-xl font-semibold tracking-[0.18em] text-[#1C1714] block">
+            <span className="font-brand text-base sm:text-xl font-semibold tracking-[0.16em] sm:tracking-[0.18em] text-[#1C1714] block leading-tight">
               TREVOORESIN
             </span>
-            <span className="text-[9px] tracking-[0.2em] uppercase text-[#7C726A] font-medium block -mt-1">
+            <span className="text-[8px] sm:text-[9px] tracking-[0.18em] uppercase text-[#7C726A] font-medium block">
               Handcrafted Studio
             </span>
           </div>
         </button>
 
-        {/* Navigation Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Top Actions: Card Symbol for Admin Passcode View & Direct WhatsApp */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           
           {/* PWA Install App Button */}
           {isInstallable && (
             <button
               onClick={handleInstallClick}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[#A46752] hover:bg-[#8F5542] text-white shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-medium bg-[#A46752] hover:bg-[#8F5542] text-white shadow-xs transition-all cursor-pointer shrink-0"
               title="Install App like Play Store"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Install App</span>
+              <span className="hidden sm:inline">Install App</span>
             </button>
           )}
-
-          {/* View Toggle Pill */}
-          <div className="flex items-center bg-white p-1 rounded-full border border-[#E8DFC8]">
-            <button
-              onClick={() => { setActiveView('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              className={`px-3.5 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
-                activeView === 'home'
-                  ? 'bg-[#1C1714] text-white shadow-xs'
-                  : 'text-[#524741] hover:text-[#1C1714]'
-              }`}
-            >
-              Card
-            </button>
-            <button
-              onClick={() => { setActiveView('catalogue'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              className={`px-3.5 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium flex items-center gap-1.5 transition-all cursor-pointer ${
-                activeView === 'catalogue'
-                  ? 'bg-[#1C1714] text-white shadow-xs'
-                  : 'text-[#524741] hover:text-[#1C1714]'
-              }`}
-            >
-              <Compass className="w-3.5 h-3.5" />
-              Creations
-            </button>
-          </div>
 
           {/* Quick Direct WhatsApp Button */}
           <a
             href="https://wa.me/8639335031?text=Hi%20Trevooresin!%20I%27d%20love%20to%20order%20a%20custom%20resin%20piece"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium bg-white text-[#1C1714] border border-[#E8DFC8] hover:bg-[#F5EFE3] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white text-[#1C1714] border border-[#E8DFC8] hover:bg-[#F5EFE3] transition-colors cursor-pointer shadow-2xs"
+            title="Chat on WhatsApp"
           >
             <MessageCircle className="w-3.5 h-3.5 text-[#25D366] fill-[#25D366]" />
-            WhatsApp
+            <span className="hidden sm:inline">WhatsApp</span>
           </a>
 
-          {/* Passcode Protected Order Access Trigger */}
+          {/* Card Symbol: Admin enters password to view orders */}
           <button
             onClick={onOpenAdmin}
-            title="Studio Orders"
-            className="relative inline-flex items-center gap-1 p-2 text-[#7C726A] hover:text-[#1C1714] rounded-full hover:bg-white transition-colors cursor-pointer"
+            title="Enter passcode to view orders"
+            className="relative p-2 rounded-full bg-white hover:bg-[#F5EFE3] text-[#1C1714] border border-[#E8DFC8] shadow-2xs transition-all cursor-pointer"
+            id="btn-admin-card-symbol"
+            aria-label="Studio Orders"
           >
-            <Lock className="w-4 h-4 text-[#C8A25D]" />
+            <CreditCard className="w-4 h-4 text-[#1C1714]" />
             {enquiryCount > 0 && (
-              <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-[#A46752] text-white text-[8px] font-bold rounded-full flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#A46752] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                 {enquiryCount}
               </span>
             )}
           </button>
         </div>
+
       </div>
     </header>
   );

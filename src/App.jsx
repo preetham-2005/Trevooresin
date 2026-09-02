@@ -66,18 +66,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1C1714] selection:bg-[#E8E1D7] selection:text-[#1C1714] relative">
+    <div className="min-h-screen flex flex-col bg-[#FAF5EC] text-[#1C1714] selection:bg-[#E8DFC8] selection:text-[#1C1714] relative w-full max-w-full overflow-x-hidden">
       
       {/* Top Navigation */}
       <Navbar
-        activeView={activeView}
-        setActiveView={setActiveView}
         onOpenAdmin={() => setIsAdminOpen(true)}
         enquiryCount={enquiryCount}
       />
 
       {/* Main Content Area */}
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full overflow-x-hidden">
         {activeView === 'home' ? (
           /* =================================================== */
           /* HOMEPAGE: Clean, Focused & Conversion-Driven        */
@@ -116,17 +114,10 @@ export default function App() {
       </main>
 
       {/* Studio Footer */}
-      <Footer
-        onOpenAdmin={() => setIsAdminOpen(true)}
-        onViewCreations={handleExploreCreations}
-      />
+      <Footer />
 
-      {/* Persistent Floating Quick-Actions */}
-      <FloatingActions
-        activeView={activeView}
-        setActiveView={setActiveView}
-        onScrollToForm={handleScrollToForm}
-      />
+      {/* Persistent Floating WhatsApp Quick-Action */}
+      <FloatingActions />
 
       {/* Fullscreen Photo Lightbox Modal */}
       <LightboxModal

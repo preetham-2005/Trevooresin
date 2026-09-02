@@ -1,10 +1,10 @@
 import React from 'react';
-import { Phone, MessageCircle, Lock } from 'lucide-react';
+import { Phone, MessageCircle } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
-export default function Footer({ onOpenAdmin }) {
+export default function Footer() {
   return (
-    <footer className="bg-[#FAF5EC] text-[#1C1714] border-t border-[#E8DFC8] py-14 px-4 text-center relative overflow-hidden">
+    <footer className="w-full max-w-full bg-[#FAF5EC] text-[#1C1714] border-t border-[#E8DFC8] py-14 px-4 text-center relative overflow-hidden">
       <div className="max-w-xl mx-auto flex flex-col items-center">
         
         {/* Brand Name */}
@@ -63,16 +63,6 @@ export default function Footer({ onOpenAdmin }) {
         <p className="mt-1.5 text-xs text-[#7C726A]/80 font-light">
           © {new Date().getFullYear()} Trevooresin. Every piece is one of one.
         </p>
-
-        {/* Passcode Protected Order Access */}
-        <button
-          onClick={onOpenAdmin}
-          className="mt-6 text-[11px] text-[#7C726A] hover:text-[#1C1714] transition-colors inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E8DFC8] shadow-2xs cursor-pointer"
-          title="Studio Orders"
-        >
-          <Lock className="w-3 h-3 text-[#C8A25D]" />
-          <span>View Orders</span>
-        </button>
 
       </div>
     </footer>
