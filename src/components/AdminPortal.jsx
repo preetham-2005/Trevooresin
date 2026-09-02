@@ -214,7 +214,7 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
               <div className="relative">
                 <input
                   type={showPinText ? 'text' : 'password'}
-                  placeholder="Enter Passcode (2026)"
+                  placeholder="Enter Passcode"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value)}
                   autoFocus
@@ -242,10 +242,6 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
               >
                 Unlock & View Orders
               </button>
-              
-              <div className="text-[11px] text-[#7C726A]">
-                Default Passcode: <code className="bg-white border border-[#E8DFC8] px-2 py-0.5 rounded text-[#1C1714] font-bold">2026</code>
-              </div>
             </form>
           </div>
         ) : (

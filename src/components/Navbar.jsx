@@ -118,7 +118,7 @@ export default function Navbar({ activeView, setActiveView, onOpenAdmin, enquiry
           {/* Passcode Protected Order Access Trigger */}
           <button
             onClick={onOpenAdmin}
-            title="View Orders (Passcode: 2026)"
+            title="Studio Orders"
             className="relative inline-flex items-center gap-1 p-2 text-[#7C726A] hover:text-[#1C1714] rounded-full hover:bg-white transition-colors cursor-pointer"
           >
             <Lock className="w-4 h-4 text-[#C8A25D]" />

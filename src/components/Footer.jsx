@@ -68,10 +68,10 @@ export default function Footer({ onOpenAdmin }) {
         <button
           onClick={onOpenAdmin}
           className="mt-6 text-[11px] text-[#7C726A] hover:text-[#1C1714] transition-colors inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E8DFC8] shadow-2xs cursor-pointer"
-          title="View Orders (Passcode Protected: 2026)"
+          title="Studio Orders"
         >
           <Lock className="w-3 h-3 text-[#C8A25D]" />
-          <span>View Orders (Passcode: 2026)</span>
+          <span>View Orders</span>
         </button>
 
       </div>
