@@ -173,33 +173,33 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto overflow-x-hidden animate-fade-in">
       <div 
-        className="relative w-full max-w-5xl bg-[#FAF5EC] rounded-3xl overflow-hidden border border-[#E8DFC8] shadow-2xl flex flex-col max-h-[92vh]"
+        className="relative w-full max-w-[96vw] sm:max-w-5xl bg-[#FAF5EC] rounded-2xl sm:rounded-3xl overflow-hidden border border-[#E8DFC8] shadow-2xl flex flex-col max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Header Bar */}
-        <div className="bg-[#1C1714] text-[#FAF5EC] px-6 py-4 flex items-center justify-between border-b border-[#E8DFC8]/20">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#C8A25D] text-[#1C1714] flex items-center justify-center font-bold">
-              <ShieldCheck className="w-4 h-4" />
+        <div className="bg-[#1C1714] text-[#FAF5EC] px-3.5 sm:px-6 py-3 sm:py-4 flex items-center justify-between border-b border-[#E8DFC8]/20 shrink-0 gap-2">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#C8A25D] text-[#1C1714] flex items-center justify-center font-bold shrink-0">
+              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
-            <div>
-              <h2 className="font-serif text-lg sm:text-xl font-bold text-white">
+            <div className="min-w-0">
+              <h2 className="font-serif text-base sm:text-xl font-bold text-white truncate">
                 Trevooresin Orders & Admin
               </h2>
-              <span className="text-[10px] uppercase tracking-widest text-[#C8A25D]">
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-[#C8A25D] block truncate">
                 Protected Client Orders & Security
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {isAuthenticated && (
               <button
                 onClick={() => setIsSecurityModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[#FAF5EC] text-xs font-medium transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[#FAF5EC] text-xs font-medium transition-colors cursor-pointer"
                 title="Update Passcode Security"
               >
                 <KeyRound className="w-3.5 h-3.5 text-[#C8A25D]" />
@@ -266,46 +266,46 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
           </div>
         ) : (
           /* Authenticated Orders Dashboard */
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-6 space-y-4 sm:space-y-6 w-full max-w-full">
             
             {/* KPI Stats Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="bg-white p-4 rounded-2xl border border-[#E8DFC8] shadow-2xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+              <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E8DFC8] shadow-2xs">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-[#7C726A] block">
                   Total Orders
                 </span>
-                <span className="font-serif text-2xl font-bold text-[#1C1714]">
+                <span className="font-serif text-xl sm:text-2xl font-bold text-[#1C1714]">
                   {enquiries.length}
                 </span>
               </div>
-              <div className="bg-white p-4 rounded-2xl border border-[#E8DFC8] shadow-2xs">
+              <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E8DFC8] shadow-2xs">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-amber-700 block">
                   New Unprocessed
                 </span>
-                <span className="font-serif text-2xl font-bold text-amber-600">
+                <span className="font-serif text-xl sm:text-2xl font-bold text-amber-600">
                   {enquiries.filter(e => e.status === 'New').length}
                 </span>
               </div>
-              <div className="bg-white p-4 rounded-2xl border border-[#E8DFC8] shadow-2xs">
+              <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E8DFC8] shadow-2xs">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-blue-700 block">
                   In Design / Active
                 </span>
-                <span className="font-serif text-2xl font-bold text-blue-600">
+                <span className="font-serif text-xl sm:text-2xl font-bold text-blue-600">
                   {enquiries.filter(e => ['In Design', 'In Progress'].includes(e.status)).length}
                 </span>
               </div>
-              <div className="bg-white p-4 rounded-2xl border border-[#E8DFC8] shadow-2xs">
+              <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E8DFC8] shadow-2xs">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-700 block">
                   Completed Artworks
                 </span>
-                <span className="font-serif text-2xl font-bold text-emerald-600">
+                <span className="font-serif text-xl sm:text-2xl font-bold text-emerald-600">
                   {enquiries.filter(e => e.status === 'Completed').length}
                 </span>
               </div>
             </div>
 
             {/* Controls Bar: Search, Status Filter, Export, Change Password */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-[#E8DFC8]">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 bg-white p-3 sm:p-3.5 rounded-2xl border border-[#E8DFC8]">
               
               {/* Search */}
               <div className="relative flex-1">
@@ -319,12 +319,12 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
                 />
               </div>
 
-              {/* Status Filter */}
-              <div className="flex items-center gap-2">
+              {/* Status Filter, Export, Passcode buttons */}
+              <div className="flex flex-wrap items-center gap-2">
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="text-xs px-3 py-2 rounded-xl bg-[#FAF5EC] border border-[#E8DFC8] text-[#1C1714] focus:outline-none cursor-pointer"
+                  className="text-xs px-2.5 py-2 rounded-xl bg-[#FAF5EC] border border-[#E8DFC8] text-[#1C1714] focus:outline-none cursor-pointer shrink-0"
                 >
                   <option value="All">All Statuses ({enquiries.length})</option>
                   <option value="New">New</option>
@@ -337,9 +337,10 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
                 <button
                   onClick={handleExportCSV}
                   className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#FAF5EC] border border-[#E8DFC8] hover:bg-[#E8DFC8] text-[#1C1714] text-xs font-medium transition-colors cursor-pointer shrink-0"
+                  title="Download Excel CSV Sheet"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Export CSV</span>
+                  <span>Excel CSV</span>
                 </button>
 
                 <button
@@ -359,16 +360,16 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
                 <p className="text-sm text-[#7C726A]">No customer orders match your criteria.</p>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3.5 sm:space-y-4 w-full">
                 {filteredEnquiries.map((enquiry) => (
                   <div 
                     key={enquiry.id}
-                    className="bg-white rounded-2xl p-5 border border-[#E8DFC8] shadow-xs space-y-4"
+                    className="bg-white rounded-2xl p-3.5 sm:p-5 border border-[#E8DFC8] shadow-xs space-y-3 sm:space-y-4 overflow-hidden w-full"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#FAF5EC]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[#FAF5EC]">
                       <div>
-                        <div className="flex items-center gap-2">
-                          <h4 className="font-serif text-lg font-bold text-[#1C1714]">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4 className="font-serif text-base sm:text-lg font-bold text-[#1C1714]">
                             {enquiry.clientName}
                           </h4>
                           <span className={`text-[10px] font-semibold uppercase px-2.5 py-0.5 rounded-full border ${
@@ -385,7 +386,7 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
                       </div>
 
                       {/* Quick Contact Buttons */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 shrink-0">
                         <a
                           href={`https://wa.me/${(enquiry.phone || '').replace(/[^0-9]/g, '')}?text=Hi%20${encodeURIComponent(enquiry.clientName)},%20this%20is%20Trevooresin%20following%20up%20on%20your%20custom%20order%20inquiry!`}
                           target="_blank"
@@ -398,7 +399,7 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
 
                         <button
                           onClick={() => handleDelete(enquiry.id)}
-                          className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                          className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
                           title="Delete"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -407,18 +408,18 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
                     </div>
 
                     {/* Order Details Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[#524741]">
-                      <div className="bg-[#FAF5EC] p-3 rounded-xl border border-[#E8DFC8]/60">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 text-xs text-[#524741] w-full">
+                      <div className="bg-[#FAF5EC] p-2.5 sm:p-3 rounded-xl border border-[#E8DFC8]/60 overflow-hidden">
                         <span className="text-[10px] font-bold text-[#7C726A] block uppercase">Contact Details</span>
-                        <p className="font-semibold text-[#1C1714] mt-0.5">{enquiry.phone}</p>
-                        {enquiry.email && <p className="text-gray-500 truncate">{enquiry.email}</p>}
+                        <p className="font-semibold text-[#1C1714] mt-0.5 break-all">{enquiry.phone}</p>
+                        {enquiry.email && <p className="text-gray-500 break-all text-[11px] mt-0.5">{enquiry.email}</p>}
                       </div>
-                      <div className="bg-[#FAF5EC] p-3 rounded-xl border border-[#E8DFC8]/60">
+                      <div className="bg-[#FAF5EC] p-2.5 sm:p-3 rounded-xl border border-[#E8DFC8]/60 overflow-hidden">
                         <span className="text-[10px] font-bold text-[#7C726A] block uppercase">Category & Budget</span>
-                        <p className="font-semibold text-[#1C1714] mt-0.5">{enquiry.category}</p>
-                        <p className="text-[#9A7B2C]">{enquiry.budget || 'Custom Quote'}</p>
+                        <p className="font-semibold text-[#1C1714] mt-0.5 break-words">{enquiry.category}</p>
+                        <p className="text-[#9A7B2C] mt-0.5">{enquiry.budget || 'Custom Quote'}</p>
                       </div>
-                      <div className="bg-[#FAF5EC] p-3 rounded-xl border border-[#E8DFC8]/60">
+                      <div className="bg-[#FAF5EC] p-2.5 sm:p-3 rounded-xl border border-[#E8DFC8]/60 overflow-hidden">
                         <span className="text-[10px] font-bold text-[#7C726A] block uppercase">Timeline & Occasion</span>
                         <p className="font-semibold text-[#1C1714] mt-0.5">
                           {enquiry.neededBy ? `Needed by ${enquiry.neededBy}` : 'Flexible'}
@@ -428,9 +429,9 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
 
                     {/* Description */}
                     {enquiry.details && (
-                      <div className="text-xs bg-[#FAF5EC]/50 p-3 rounded-xl border border-[#E8DFC8]/40">
+                      <div className="text-xs bg-[#FAF5EC]/50 p-2.5 sm:p-3 rounded-xl border border-[#E8DFC8]/40 overflow-hidden">
                         <span className="text-[10px] font-bold text-[#7C726A] block uppercase mb-1">Custom Request Notes</span>
-                        <p className="text-[#1C1714] leading-relaxed whitespace-pre-wrap">{enquiry.details}</p>
+                        <p className="text-[#1C1714] leading-relaxed whitespace-pre-wrap break-words">{enquiry.details}</p>
                       </div>
                     )}
 
@@ -440,29 +441,31 @@ export default function AdminPortal({ isOpen, onClose, onDataChanged }) {
                         <img 
                           src={enquiry.imagePreview} 
                           alt="Customer reference" 
-                          className="w-16 h-16 rounded-xl object-cover border border-[#E8DFC8] cursor-pointer hover:scale-105 transition-transform"
+                          className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover border border-[#E8DFC8] cursor-pointer hover:scale-105 transition-transform shrink-0"
                           onClick={() => setSelectedImage(enquiry.imagePreview)}
                         />
                         <span className="text-xs text-[#7C726A]">Click thumbnail to expand client reference image</span>
                       </div>
                     )}
 
-                    {/* Status Changer */}
-                    <div className="flex items-center gap-2 pt-2 border-t border-[#FAF5EC]">
-                      <span className="text-xs font-semibold text-[#7C726A]">Status:</span>
-                      {['New', 'In Design', 'In Progress', 'Completed', 'Archived'].map((st) => (
-                        <button
-                          key={st}
-                          onClick={() => handleStatusChange(enquiry.id, st)}
-                          className={`text-[11px] px-2.5 py-1 rounded-full border transition-all cursor-pointer ${
-                            enquiry.status === st
-                              ? 'bg-[#1C1714] text-white border-[#1C1714] font-medium'
-                              : 'bg-white text-[#7C726A] border-[#E8DFC8] hover:bg-[#FAF5EC]'
-                          }`}
-                        >
-                          {st}
-                        </button>
-                      ))}
+                    {/* Status Changer - Flex-wrapped so it NEVER overflows out of screen */}
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 pt-2.5 border-t border-[#FAF5EC] w-full">
+                      <span className="text-xs font-semibold text-[#7C726A] shrink-0">Status:</span>
+                      <div className="flex flex-wrap items-center gap-1.5 w-full">
+                        {['New', 'In Design', 'In Progress', 'Completed', 'Archived'].map((st) => (
+                          <button
+                            key={st}
+                            onClick={() => handleStatusChange(enquiry.id, st)}
+                            className={`text-[11px] px-3 py-1 rounded-full border transition-all cursor-pointer whitespace-nowrap ${
+                              enquiry.status === st
+                                ? 'bg-[#1C1714] text-white border-[#1C1714] font-medium shadow-2xs'
+                                : 'bg-white text-[#7C726A] border-[#E8DFC8] hover:bg-[#FAF5EC]'
+                            }`}
+                          >
+                            {st}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
                   </div>
