@@ -2,10 +2,11 @@
   "name": "Trevooresin | Handcrafted Luxury Resin Art",
   "short_name": "Trevooresin",
   "description": "Luxury handcrafted resin art studio specializing in wedding floral preservation, pooja thalis, Krishna jhulas, wall clocks, and bespoke keepsakes.",
-  "start_url": "/",
+  "start_url": "/?mode=standalone",
   "id": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "fullscreen", "window-controls-overlay"],
   "background_color": "#FAF5EC",
   "theme_color": "#FAF5EC",
   "orientation": "portrait-primary",
@@ -34,6 +35,36 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Trevooresin Luxury Resin Art Studio"
+    },
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Explore Handcrafted Resin Creations & Custom Orders"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Catalogue",
+      "short_name": "Catalogue",
+      "url": "/#catalogue",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Custom Order Enquiry",
+      "short_name": "Enquire",
+      "url": "/#custom-enquiry-section",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }
