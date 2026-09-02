@@ -9,6 +9,7 @@ import AdminPortal from './components/AdminPortal';
 import LightboxModal from './components/LightboxModal';
 import Footer from './components/Footer';
 import FloatingActions from './components/FloatingActions';
+import InstallPromptBanner from './components/InstallPromptBanner';
 import { getEnquiries } from './utils/storage';
 
 export default function App() {
@@ -119,6 +120,9 @@ export default function App() {
 
       {/* Persistent Floating WhatsApp Quick-Action */}
       <FloatingActions />
+
+      {/* Bottom Floating Install Prompt Banner */}
+      <InstallPromptBanner />
 
       {/* Fullscreen Photo Lightbox Modal */}
       <LightboxModal
