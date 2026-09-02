@@ -10,6 +10,7 @@
   "background_color": "#FAF5EC",
   "theme_color": "#FAF5EC",
   "orientation": "portrait-primary",
+  "prefer_related_applications": false,
   "categories": ["shopping", "lifestyle", "art"],
   "icons": [
     {
