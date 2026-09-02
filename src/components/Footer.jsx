@@ -1,19 +1,19 @@
 import React from 'react';
-import { Phone, MessageCircle, Shield } from 'lucide-react';
+import { Phone, MessageCircle, Lock } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 
 export default function Footer({ onOpenAdmin }) {
   return (
-    <footer className="bg-[#FAF6F0] text-[#2C1F18] border-t border-[#E8DFC8]/60 py-16 px-4 text-center relative overflow-hidden">
+    <footer className="bg-[#FAF5EC] text-[#1C1714] border-t border-[#E8DFC8] py-14 px-4 text-center relative overflow-hidden">
       <div className="max-w-xl mx-auto flex flex-col items-center">
         
         {/* Brand Name */}
-        <h3 className="font-serif text-3xl sm:text-4xl font-normal text-[#2C1F18] tracking-tight">
+        <h3 className="font-serif text-3xl sm:text-4xl font-normal text-[#1C1714] tracking-tight">
           Trevooresin
         </h3>
 
         {/* Tagline */}
-        <p className="mt-2 text-xs sm:text-sm text-[#4A3528]/80 font-light max-w-md mx-auto leading-relaxed">
+        <p className="mt-2 text-xs sm:text-sm text-[#524741] font-light max-w-md mx-auto leading-relaxed">
           Handcrafted resin art, poured with patience and finished with love.
         </p>
 
@@ -24,7 +24,7 @@ export default function Footer({ onOpenAdmin }) {
             href="https://wa.me/8639335031?text=Hi%20Trevooresin!%20I%27d%20love%20to%20order%20a%20custom%20resin%20piece"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-11 h-11 rounded-full bg-white border border-[#E8DFC8]/80 flex items-center justify-center text-[#2C1F18] shadow-xs hover:scale-108 hover:border-[#25D366] hover:text-[#25D366] transition-all duration-300 cursor-pointer"
+            className="w-11 h-11 rounded-full bg-white border border-[#E8DFC8] flex items-center justify-center text-[#1C1714] shadow-2xs hover:scale-108 hover:border-[#25D366] hover:text-[#25D366] transition-all duration-300 cursor-pointer"
             aria-label="WhatsApp"
             title="Chat on WhatsApp"
           >
@@ -36,7 +36,7 @@ export default function Footer({ onOpenAdmin }) {
             href="https://www.instagram.com/trevooresin/?hl=en"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-11 h-11 rounded-full bg-white border border-[#E8DFC8]/80 flex items-center justify-center text-[#2C1F18] shadow-xs hover:scale-108 hover:border-[#E1306C] hover:text-[#E1306C] transition-all duration-300 cursor-pointer"
+            className="w-11 h-11 rounded-full bg-white border border-[#E8DFC8] flex items-center justify-center text-[#1C1714] shadow-2xs hover:scale-108 hover:border-[#E1306C] hover:text-[#E1306C] transition-all duration-300 cursor-pointer"
             aria-label="Instagram"
             title="Follow on Instagram"
           >
@@ -46,7 +46,7 @@ export default function Footer({ onOpenAdmin }) {
           {/* Phone Call */}
           <a
             href="tel:+918639335031"
-            className="w-11 h-11 rounded-full bg-white border border-[#E8DFC8]/80 flex items-center justify-center text-[#2C1F18] shadow-xs hover:scale-108 hover:border-[#D4AF37] hover:text-[#9A7B2C] transition-all duration-300 cursor-pointer"
+            className="w-11 h-11 rounded-full bg-white border border-[#E8DFC8] flex items-center justify-center text-[#1C1714] shadow-2xs hover:scale-108 hover:border-[#1C1714] transition-all duration-300 cursor-pointer"
             aria-label="Call Studio"
             title="Call Studio"
           >
@@ -55,23 +55,23 @@ export default function Footer({ onOpenAdmin }) {
         </div>
 
         {/* Location */}
-        <p className="text-xs text-[#4A3528]/75 font-normal tracking-wide">
+        <p className="text-xs text-[#7C726A] font-normal tracking-wide">
           Hyderabad, India
         </p>
 
         {/* Copyright */}
-        <p className="mt-2 text-xs text-[#4A3528]/60 font-light">
+        <p className="mt-1.5 text-xs text-[#7C726A]/80 font-light">
           © {new Date().getFullYear()} Trevooresin. Every piece is one of one.
         </p>
 
-        {/* Subtle Admin Trigger */}
+        {/* Passcode Protected Order Access */}
         <button
           onClick={onOpenAdmin}
-          className="mt-6 text-[10px] text-[#4A3528]/40 hover:text-[#4A3528] transition-colors inline-flex items-center gap-1 cursor-pointer"
-          title="Owner Admin"
+          className="mt-6 text-[11px] text-[#7C726A] hover:text-[#1C1714] transition-colors inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E8DFC8] shadow-2xs cursor-pointer"
+          title="View Orders (Passcode Protected: 2026)"
         >
-          <Shield className="w-3 h-3 opacity-60" />
-          <span>Admin Portal</span>
+          <Lock className="w-3 h-3 text-[#C8A25D]" />
+          <span>View Orders (Passcode: 2026)</span>
         </button>
 
       </div>

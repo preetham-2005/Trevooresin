@@ -83,8 +83,8 @@ export default function App() {
           /* HOMEPAGE: Clean, Focused & Conversion-Driven        */
           /* =================================================== */
           <div className="animate-fade-in">
-            {/* 1. Hero / Brand Intro with WhatsApp & Instagram */}
-            <Hero />
+            {/* 1. Hero / Brand Intro with Call, WhatsApp & Explore button */}
+            <Hero onExploreClick={handleExploreCreations} />
 
             {/* 2. Prominent Explore Our Creations CTA Banner */}
             <ExploreBanner onExploreClick={handleExploreCreations} />

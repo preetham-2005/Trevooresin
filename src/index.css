@@ -2,17 +2,19 @@
 
 @layer base {
   :root {
-    --color-ivory: #FAF8F5;
-    --color-cream: #F4EFEA;
-    --color-border: #E8E1D7;
+    --color-ivory: #FAF5EC;
+    --color-cream: #F5EFE3;
+    --color-border: #E8DFC8;
     --color-charcoal: #1C1714;
     --color-charcoal-muted: #524741;
+    --color-terracotta: #A46752;
+    --color-sage: #DFE7DC;
     --color-gold: #C8A25D;
   }
 
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    background-color: #FAF8F5;
+    background-color: #FAF5EC;
     color: #1C1714;
   }
 
@@ -27,7 +29,7 @@
 
 /* Subtle, Minimalist Accents */
 .gold-border-subtle {
-  border-color: #E8E1D7;
+  border-color: #E8DFC8;
 }
 
 .soft-shadow {
@@ -48,12 +50,28 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF8F5;
+  background: #FAF5EC;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D8D0C5;
+  background: #D8CEBD;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B8AFA2;
+  background: #B8A892;
+}
+
+/* Custom Dropdown Animation */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-animate-in {
+  animation: dropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

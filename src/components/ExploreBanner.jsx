@@ -13,7 +13,7 @@ export default function ExploreBanner({ onExploreClick }) {
     <section className="px-4 sm:px-6 max-w-4xl mx-auto my-6">
       <div 
         onClick={onExploreClick}
-        className="rounded-2xl bg-white text-[#1C1714] p-6 sm:p-8 border border-[#E8E1D7] shadow-sm cursor-pointer group hover:border-[#1C1714]/40 transition-all"
+        className="rounded-3xl bg-white text-[#1C1714] p-6 sm:p-8 border border-[#E8DFC8] shadow-xs cursor-pointer group hover:border-[#1C1714]/40 transition-all"
         id="btn-explore-creations-banner"
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -54,13 +54,13 @@ export default function ExploreBanner({ onExploreClick }) {
 
         {/* Minimal Neutral Tags */}
         <div className="mt-5 pt-4 border-t border-[#F4EFEA] flex flex-wrap gap-2 text-xs text-[#7C726A]">
-          <span className="bg-[#FAF8F5] border border-[#E8E1D7] px-2.5 py-1 rounded-full font-normal">
+          <span className="bg-[#FAF5EC] border border-[#E8DFC8] px-2.5 py-1 rounded-full font-normal">
             Pooja & Festive Art
           </span>
-          <span className="bg-[#FAF8F5] border border-[#E8E1D7] px-2.5 py-1 rounded-full font-normal">
+          <span className="bg-[#FAF5EC] border border-[#E8DFC8] px-2.5 py-1 rounded-full font-normal">
             Wall Clocks & Nameplates
           </span>
-          <span className="bg-[#FAF8F5] border border-[#E8E1D7] px-2.5 py-1 rounded-full font-normal">
+          <span className="bg-[#FAF5EC] border border-[#E8DFC8] px-2.5 py-1 rounded-full font-normal">
             Preserved Florals & Keepsakes
           </span>
         </div>

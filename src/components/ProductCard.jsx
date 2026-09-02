@@ -68,7 +68,7 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
   };
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden border border-[#E8E1D7] shadow-xs hover:shadow-md transition-all duration-300 flex flex-col group">
+    <div className="bg-white rounded-2xl overflow-hidden border border-[#E8DFC8] shadow-xs hover:shadow-md transition-all duration-300 flex flex-col group">
       
       {/* Product Visual Container with Carousel */}
       <div 
@@ -151,7 +151,7 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
           </p>
 
           {/* Pricing & Specification Box */}
-          <div className="bg-[#FAF8F5] rounded-xl p-3 border border-[#E8E1D7] space-y-1.5 mb-4 text-xs text-[#1C1714]">
+          <div className="bg-[#FAF8F5] rounded-xl p-3 border border-[#E8DFC8] space-y-1.5 mb-4 text-xs text-[#1C1714]">
             {prod.craftingTime && (
               <div className="flex items-center justify-between">
                 <span className="text-[#7C726A] flex items-center gap-1">
@@ -169,7 +169,7 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
               </div>
             )}
             {/* Price Line */}
-            <div className="flex items-center justify-between pt-1.5 border-t border-[#E8E1D7]">
+            <div className="flex items-center justify-between pt-1.5 border-t border-[#E8DFC8]">
               <span className="text-xs uppercase tracking-wider font-semibold text-[#7C726A] flex items-center gap-1">
                 <Tag className="w-3.5 h-3.5" /> Pricing:
               </span>
@@ -185,7 +185,7 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
               {prod.features.map((feat, fidx) => (
                 <span 
                   key={fidx} 
-                  className="inline-flex items-center gap-1 text-[11px] bg-[#FAF8F5] text-[#524741] px-2.5 py-0.5 rounded-full border border-[#E8E1D7]"
+                  className="inline-flex items-center gap-1 text-[11px] bg-[#FAF8F5] text-[#524741] px-2.5 py-0.5 rounded-full border border-[#E8DFC8]"
                 >
                   <Check className="w-3 h-3 text-[#7C726A]" />
                   {feat}
@@ -212,7 +212,7 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
           {/* Request Custom Variation */}
           <button
             onClick={() => onSelectProductForCustomOrder(prod.name, prod.category)}
-            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full bg-white hover:bg-[#FAF8F5] text-[#1C1714] font-medium text-xs transition-colors cursor-pointer border border-[#E8E1D7]"
+            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full bg-white hover:bg-[#FAF8F5] text-[#1C1714] font-medium text-xs transition-colors cursor-pointer border border-[#E8DFC8]"
           >
             <Sparkles className="w-3.5 h-3.5 text-[#7C726A]" />
             <span>Customize This Piece</span>

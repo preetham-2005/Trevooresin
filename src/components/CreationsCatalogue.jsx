@@ -20,10 +20,10 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
     : PRODUCTS.filter(p => p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen pb-20 bg-[#FAF8F5]">
+    <div className="min-h-screen pb-20 bg-[#FAF5EC]">
       
       {/* Top Navigation & Breadcrumb */}
-      <div className="bg-[#FAF8F5]/95 border-b border-[#E8E1D7] sticky top-16 z-30 backdrop-blur-sm">
+      <div className="bg-[#FAF5EC]/95 border-b border-[#E8DFC8] sticky top-16 z-30 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <button
             onClick={onBackToHome}
@@ -72,9 +72,9 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
           {WHAT_WE_CREATE_CARDS.map((item, idx) => (
             <div 
               key={idx}
-              className="bg-white rounded-2xl overflow-hidden border border-[#E8E1D7] shadow-xs hover:shadow-md transition-all duration-300 flex flex-col group"
+              className="bg-white rounded-2xl overflow-hidden border border-[#E8DFC8] shadow-xs hover:shadow-md transition-all duration-300 flex flex-col group"
             >
-              <div className="relative h-48 sm:h-52 overflow-hidden bg-[#FAF8F5]">
+              <div className="relative h-48 sm:h-52 overflow-hidden bg-[#FAF5EC]">
                 <img 
                   src={item.image} 
                   alt={item.title} 
@@ -112,7 +112,7 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
       {/* ======================================================== */}
       {/* SECTION 2: VIEW ALL PRODUCTS & SERVICES (CATALOGUE)      */}
       {/* ======================================================== */}
-      <section id="view-all-products" className="px-4 sm:px-6 max-w-5xl mx-auto my-12 pt-8 border-t border-[#E8E1D7]">
+      <section id="view-all-products" className="px-4 sm:px-6 max-w-5xl mx-auto my-12 pt-8 border-t border-[#E8DFC8]">
         <div className="text-center max-w-xl mx-auto mb-6">
           <span className="text-[11px] uppercase tracking-widest text-[#7C726A] font-medium block mb-1">
             Browse & Order
@@ -134,7 +134,7 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
               className={`px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
                 selectedCategory === cat
                   ? 'bg-[#1C1714] text-white shadow-xs'
-                  : 'bg-white text-[#524741] border border-[#E8E1D7] hover:bg-[#FAF8F5]'
+                  : 'bg-white text-[#524741] border border-[#E8DFC8] hover:bg-[#FAF5EC]'
               }`}
             >
               {cat}
@@ -158,8 +158,8 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
       {/* ======================================================== */}
       {/* SECTION 3: WHY CHOOSE TREVOORESIN                        */}
       {/* ======================================================== */}
-      <section id="why-choose-us" className="px-4 sm:px-6 max-w-5xl mx-auto my-12 pt-8 border-t border-[#E8E1D7]">
-        <div className="bg-white rounded-2xl p-6 sm:p-10 border border-[#E8E1D7] shadow-xs">
+      <section id="why-choose-us" className="px-4 sm:px-6 max-w-5xl mx-auto my-12 pt-8 border-t border-[#E8DFC8]">
+        <div className="bg-white rounded-2xl p-6 sm:p-10 border border-[#E8DFC8] shadow-xs">
           
           <div className="text-center max-w-xl mx-auto mb-8">
             <span className="text-[11px] uppercase tracking-widest text-[#7C726A] font-medium block mb-1">
@@ -177,9 +177,9 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
             {WHY_CHOOSE_US.map((item, idx) => (
               <div 
                 key={idx} 
-                className="bg-[#FAF8F5] border border-[#E8E1D7] rounded-xl p-4 sm:p-5"
+                className="bg-[#FAF5EC] border border-[#E8DFC8] rounded-xl p-4 sm:p-5"
               >
-                <div className="w-8 h-8 rounded-full bg-white text-[#1C1714] border border-[#E8E1D7] flex items-center justify-center mb-3">
+                <div className="w-8 h-8 rounded-full bg-white text-[#1C1714] border border-[#E8DFC8] flex items-center justify-center mb-3">
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <h3 className="font-serif text-lg font-medium text-[#1C1714] mb-1.5">

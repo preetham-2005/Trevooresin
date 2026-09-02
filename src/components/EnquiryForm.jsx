@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ImagePlus, X, CheckCircle2, AlertCircle } from 'lucide-react';
 import { saveEnquiry } from '../utils/storage';
 import { sendSilentWhatsAppEnquiry } from '../utils/whatsappCloudService';
+import PremiumSelect from './PremiumSelect';
 
 export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }) {
   const [formData, setFormData] = useState({
@@ -183,7 +184,7 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
                 placeholder="Your name *"
                 value={formData.clientName}
                 onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
-                className="w-full rounded-xl border border-[#E8E1D7] bg-[#FAF8F5] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714]"
+                className="w-full rounded-xl border border-[#E8DFC8] bg-[#FAF5EC] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714]"
                 id="input-client-name"
               />
             </div>
@@ -197,7 +198,7 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
                 placeholder="Phone / WhatsApp *"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full rounded-xl border border-[#E8E1D7] bg-[#FAF8F5] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714]"
+                className="w-full rounded-xl border border-[#E8DFC8] bg-[#FAF5EC] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714]"
                 id="input-client-phone"
               />
             </div>
@@ -209,35 +210,29 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
                 placeholder="Email (optional)"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full rounded-xl border border-[#E8E1D7] bg-[#FAF8F5] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714]"
+                className="w-full rounded-xl border border-[#E8DFC8] bg-[#FAF5EC] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714]"
               />
             </div>
 
             <div>
-              <select
-                value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full rounded-xl border border-[#E8E1D7] bg-[#FAF8F5] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714] cursor-pointer"
+              <PremiumSelect
                 id="select-category"
-              >
-                <option value="">I'm interested in… *</option>
-                {categories.map((c, idx) => (
-                  <option key={idx} value={c}>{c}</option>
-                ))}
-              </select>
+                options={categories}
+                value={formData.category}
+                onChange={(val) => setFormData({ ...formData, category: val })}
+                placeholder="I'm interested in… *"
+                required={true}
+              />
             </div>
 
             <div>
-              <select
+              <PremiumSelect
+                id="select-budget"
+                options={budgets}
                 value={formData.budget}
-                onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                className="w-full rounded-xl border border-[#E8E1D7] bg-[#FAF8F5] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714] cursor-pointer"
-              >
-                <option value="">Budget range (optional)</option>
-                {budgets.map((b, idx) => (
-                  <option key={idx} value={b}>{b}</option>
-                ))}
-              </select>
+                onChange={(val) => setFormData({ ...formData, budget: val })}
+                placeholder="Budget range (optional)"
+              />
             </div>
 
             <div className="sm:col-span-2">
@@ -248,7 +243,7 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
                 type="date"
                 value={formData.neededBy}
                 onChange={(e) => setFormData({ ...formData, neededBy: e.target.value })}
-                className="w-full rounded-xl border border-[#E8E1D7] bg-[#FAF8F5] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] focus:outline-none focus:bg-white focus:border-[#1C1714]"
+                className="w-full rounded-xl border border-[#E8DFC8] bg-[#FAF5EC] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] focus:outline-none focus:bg-white focus:border-[#1C1714]"
               />
             </div>
 
@@ -259,7 +254,7 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
                 placeholder="Tell us about your piece — colours, size, occasion, a memory you want preserved…"
                 value={formData.details}
                 onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                className="w-full rounded-xl border border-[#E8E1D7] bg-[#FAF8F5] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714] min-h-24 resize-y"
+                className="w-full rounded-xl border border-[#E8DFC8] bg-[#FAF5EC] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714] min-h-24 resize-y"
               />
             </div>
 
@@ -280,7 +275,7 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-[#E8E1D7] bg-[#FAF8F5] px-4 py-3.5 text-xs sm:text-sm text-[#7C726A] hover:bg-white transition-colors cursor-pointer"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-[#E8DFC8] bg-[#FAF5EC] px-4 py-3.5 text-xs sm:text-sm text-[#7C726A] hover:bg-white transition-colors cursor-pointer"
                 >
                   <ImagePlus className="h-4 w-4" />
                   <span>Attach a reference image (optional, max 5 MB)</span>
