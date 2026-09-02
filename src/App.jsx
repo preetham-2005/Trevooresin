@@ -72,6 +72,7 @@ export default function App() {
       <Navbar
         onOpenAdmin={() => setIsAdminOpen(true)}
         enquiryCount={enquiryCount}
+        onGoHome={() => setActiveView('home')}
       />
 
       {/* Main Content Area */}

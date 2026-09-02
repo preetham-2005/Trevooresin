@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CreditCard, MessageCircle, Download } from 'lucide-react';
 
-export default function Navbar({ onOpenAdmin, enquiryCount }) {
+export default function Navbar({ onOpenAdmin, enquiryCount, onGoHome }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
 
@@ -44,7 +44,10 @@ export default function Navbar({ onOpenAdmin, enquiryCount }) {
         
         {/* Brand Logo & Name */}
         <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => {
+            if (onGoHome) onGoHome();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           className="text-left group cursor-pointer flex items-center gap-2 sm:gap-2.5 shrink-0"
         >
           <img

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { 
   ArrowLeft, 
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Layers
 } from 'lucide-react';
 import { 
   PRODUCT_CATEGORIES, 
@@ -19,30 +20,43 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
     ? PRODUCTS
     : PRODUCTS.filter(p => p.category === selectedCategory);
 
+  const handleScrollToProducts = () => {
+    const el = document.getElementById('view-all-products');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="min-h-screen pb-20 bg-[#FAF5EC]">
+    <div className="min-h-screen pb-20 bg-[#FAF5EC] w-full max-w-full overflow-x-hidden">
       
-      {/* Top Navigation & Breadcrumb */}
-      <div className="bg-[#FAF5EC]/95 border-b border-[#E8DFC8] sticky top-16 z-30 backdrop-blur-sm">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      {/* Top Breadcrumb / Action Bar - Non-sticky so it NEVER overlaps headings */}
+      <div className="bg-[#FAF5EC] border-b border-[#E8DFC8] w-full">
+        <div className="max-w-5xl mx-auto px-3 sm:px-6 py-3 flex items-center justify-between gap-2">
           <button
             onClick={onBackToHome}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-[#1C1714] hover:text-[#524741] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-[#F5EFE3] text-[#1C1714] text-xs sm:text-sm font-semibold border border-[#E8DFC8] shadow-2xs transition-all cursor-pointer shrink-0"
             id="btn-back-to-card"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 text-[#1C1714]" />
             <span>Back to Digital Card</span>
           </button>
 
-          <span className="text-xs uppercase tracking-widest text-[#7C726A] font-medium">
-            Studio Catalogue
-          </span>
+          {/* Interactive Studio Catalogue button */}
+          <button
+            onClick={handleScrollToProducts}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-[#F5EFE3] text-[#1C1714] text-xs font-semibold border border-[#E8DFC8] shadow-2xs transition-all cursor-pointer shrink-0"
+            title="Click to view all products & services"
+          >
+            <Layers className="w-3.5 h-3.5 text-[#C8A25D]" />
+            <span>Studio Catalogue ↓</span>
+          </button>
         </div>
       </div>
 
       {/* Catalogue Header */}
-      <section className="pt-10 pb-8 px-4 sm:px-6 max-w-5xl mx-auto text-center">
-        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-[#1C1714] mb-3">
+      <section className="pt-8 pb-6 px-4 sm:px-6 max-w-5xl mx-auto text-center">
+        <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-normal text-[#1C1714] mb-3 leading-tight">
           Our Handcrafted Resin Creations
         </h1>
         <p className="text-xs sm:text-sm text-[#524741] max-w-xl mx-auto font-light leading-relaxed">
