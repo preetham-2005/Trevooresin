@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ImagePlus, X, CheckCircle2, AlertCircle } from 'lucide-react';
+import { MessageCircle, CheckCircle2, AlertCircle } from 'lucide-react';
 import { saveEnquiry } from '../utils/storage';
-import { sendSilentWhatsAppEnquiry } from '../utils/whatsappCloudService';
 import PremiumSelect from './PremiumSelect';
 
 export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }) {
@@ -15,11 +14,9 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
     details: ''
   });
 
-  const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const fileInputRef = useRef(null);
   const resetTimerRef = useRef(null);
 
   // Sync category prefill if updated from external card trigger
@@ -57,27 +54,6 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
     '₹8,000+'
   ];
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        setErrorMessage('Please upload an image smaller than 5MB.');
-        return;
-      }
-      setErrorMessage('');
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const removeImage = () => {
-    setImagePreview(null);
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
   const handleResetForm = () => {
     setIsSubmitted(false);
     setFormData({
@@ -89,10 +65,9 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
       neededBy: '',
       details: ''
     });
-    removeImage();
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.clientName.trim() || !formData.phone.trim()) {
       setErrorMessage('Please provide your name and Phone / WhatsApp number.');
@@ -102,39 +77,49 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
     setIsSubmitting(true);
     setErrorMessage('');
 
-    // 1. Maintain local/database lead storage
-    const newLead = saveEnquiry({
+    const selectedCategory = formData.category || 'Fully Custom Design Piece';
+
+    // 1. Construct formatted WhatsApp message for 8639335031
+    const messageLines = [
+      `Hi Trevooresin! Here is my custom order enquiry:`,
+      ``,
+      `👤 *Name:* ${formData.clientName.trim()}`,
+      `📞 *Phone / WhatsApp:* ${formData.phone.trim()}`,
+      formData.email.trim() ? `✉️ *Email:* ${formData.email.trim()}` : null,
+      `🎨 *Category:* ${selectedCategory}`,
+      formData.budget ? `💰 *Budget:* ${formData.budget}` : null,
+      formData.neededBy ? `📅 *Needed By (Date):* ${formData.neededBy}` : null,
+      formData.details.trim() ? `📝 *Custom Requirements:* ${formData.details.trim()}` : null,
+      ``,
+      `_(Sharing reference photos directly here on WhatsApp)_`
+    ].filter(Boolean);
+
+    const fullMessage = messageLines.join('\n');
+    const whatsappUrl = `https://wa.me/8639335031?text=${encodeURIComponent(fullMessage)}`;
+
+    // 2. Save lead locally for backup
+    saveEnquiry({
       ...formData,
-      category: formData.category || 'Fully Custom Design Piece',
-      imagePreview
+      category: selectedCategory
     });
 
-    // 2. Invoke silent server-side WhatsApp Business Cloud API integration with reference photo
-    sendSilentWhatsAppEnquiry({
-      ...formData,
-      imagePreview,
-      id: newLead ? newLead.id : Date.now()
-    });
+    if (onEnquirySubmitted) onEnquirySubmitted();
+
+    // 3. Open WhatsApp directly with 8639335031
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
     setIsSubmitting(false);
+    setIsSubmitted(true);
 
-    if (newLead) {
-      // 3. Immediately display exact confirmation message: "Thanks for submitting!"
-      setIsSubmitted(true);
-      if (onEnquirySubmitted) onEnquirySubmitted();
-
-      // 4. After 5 seconds, automatically clear confirmation and reset form
-      if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
-      resetTimerRef.current = setTimeout(() => {
-        handleResetForm();
-      }, 5000);
-    } else {
-      setErrorMessage('Failed to submit enquiry. Please check your connection and try again.');
-    }
+    // 4. Auto reset form after 5 seconds
+    if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    resetTimerRef.current = setTimeout(() => {
+      handleResetForm();
+    }, 5000);
   };
 
   return (
-    <section id="custom-enquiry-section" className="mx-auto max-w-3xl px-5 pb-16">
+    <section id="custom-enquiry-section" className="mx-auto max-w-3xl px-4 sm:px-6 pb-16">
       {/* Header */}
       <div className="mb-8 text-center">
         <span className="text-[11px] uppercase tracking-widest text-[#7C726A] font-medium block mb-1">
@@ -144,7 +129,7 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
           Tell us about your piece
         </h2>
         <p className="mt-1.5 text-xs sm:text-sm text-[#524741] font-light">
-          Share a few details and we'll get back with ideas, timelines and pricing.
+          Share your details below to send directly to our WhatsApp (863 933 5031).
         </p>
       </div>
 
@@ -152,15 +137,15 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
         /* EXACT CONFIRMATION MESSAGE */
         <div className="rounded-2xl border border-[#E8E1D7] bg-white p-8 sm:p-12 text-center shadow-xs animate-fade-in">
           <div className="w-12 h-12 bg-[#FAF8F5] border border-[#E8E1D7] rounded-full flex items-center justify-center mx-auto mb-3 text-[#1C1714]">
-            <CheckCircle2 className="w-6 h-6" />
+            <CheckCircle2 className="w-6 h-6 text-[#25D366]" />
           </div>
           
           <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#1C1714] mb-2">
-            Thanks for submitting!
+            Details Shared to WhatsApp!
           </h3>
           
-          <p className="text-xs sm:text-sm text-[#524741] font-light max-w-sm mx-auto">
-            We have received your custom order request and reference details.
+          <p className="text-xs sm:text-sm text-[#524741] font-light max-w-sm mx-auto leading-relaxed">
+            Your custom enquiry has been sent to <strong>863 933 5031</strong>. You can also attach any reference photos directly in the WhatsApp chat.
           </p>
 
           <p className="mt-4 text-[11px] text-[#7C726A]">
@@ -252,42 +237,10 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
               <textarea
                 rows={3}
                 maxLength={1000}
-                placeholder="Tell us about your piece — colours, size, occasion, a memory you want preserved…"
+                placeholder="Tell us about your piece — colours, size, occasion, or attach your reference photo in WhatsApp…"
                 value={formData.details}
                 onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                 className="w-full rounded-xl border border-[#E8DFC8] bg-[#FAF5EC] px-4 py-2.5 text-xs sm:text-sm text-[#1C1714] placeholder:text-[#7C726A] focus:outline-none focus:bg-white focus:border-[#1C1714] min-h-24 resize-y"
-              />
-            </div>
-
-            <div className="sm:col-span-2">
-              {imagePreview ? (
-                <div className="relative inline-block rounded-xl overflow-hidden border border-[#E8E1D7] shadow-2xs">
-                  <img src={imagePreview} alt="Attached reference" className="w-28 h-28 object-cover" />
-                  <button
-                    type="button"
-                    onClick={removeImage}
-                    className="absolute top-1 right-1 p-1 bg-black/70 text-white rounded-full hover:bg-black cursor-pointer"
-                    title="Remove"
-                  >
-                    <X className="w-3 h-3" />
-                  </button>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-[#E8DFC8] bg-[#FAF5EC] px-4 py-3.5 text-xs sm:text-sm text-[#7C726A] hover:bg-white transition-colors cursor-pointer"
-                >
-                  <ImagePlus className="h-4 w-4" />
-                  <span>Attach a reference image (optional, max 5 MB)</span>
-                </button>
-              )}
-              <input
-                type="file"
-                ref={fileInputRef}
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
               />
             </div>
           </div>
@@ -295,10 +248,11 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#1C1714] text-white px-6 py-3 text-xs sm:text-sm font-medium transition-all hover:bg-[#332B26] disabled:opacity-60 cursor-pointer"
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#1C1714] text-white px-6 py-3 text-xs sm:text-sm font-medium transition-all hover:bg-[#332B26] disabled:opacity-60 cursor-pointer shadow-xs"
             id="btn-submit-enquiry"
           >
-            {isSubmitting ? 'Submitting...' : 'Send Enquiry'}
+            <MessageCircle className="w-4 h-4 fill-white" />
+            <span>{isSubmitting ? 'Sending...' : 'Send Enquiry via WhatsApp'}</span>
           </button>
         </form>
       )}

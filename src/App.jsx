@@ -4,33 +4,19 @@ import Hero from './components/Hero';
 import CustomDesignSection from './components/CustomDesignSection';
 import EnquiryForm from './components/EnquiryForm';
 import CreationsCatalogue from './components/CreationsCatalogue';
-import AdminPortal from './components/AdminPortal';
 import LightboxModal from './components/LightboxModal';
 import Footer from './components/Footer';
-import { getEnquiries } from './utils/storage';
 
 export default function App() {
   const [activeView, setActiveView] = useState('home'); // 'home' | 'catalogue'
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [lightboxItem, setLightboxItem] = useState(null);
   const [prefillCategory, setPrefillCategory] = useState('');
-  const [enquiryCount, setEnquiryCount] = useState(0);
-
-  const refreshEnquiryCount = () => {
-    const list = getEnquiries();
-    const newCount = list.filter(e => e.status === 'New').length;
-    setEnquiryCount(newCount);
-  };
 
   useEffect(() => {
-    refreshEnquiryCount();
-
-    // Handle hash routing e.g. #admin, #catalogue
+    // Handle hash routing e.g. #catalogue, #creations
     const handleHash = () => {
       const hash = window.location.hash.toLowerCase();
-      if (hash === '#admin') {
-        setIsAdminOpen(true);
-      } else if (hash === '#catalogue' || hash === '#creations') {
+      if (hash === '#catalogue' || hash === '#creations') {
         setActiveView('catalogue');
       }
     };
@@ -68,8 +54,6 @@ export default function App() {
       
       {/* Top Navigation */}
       <Navbar
-        onOpenAdmin={() => setIsAdminOpen(true)}
-        enquiryCount={enquiryCount}
         onGoHome={() => setActiveView('home')}
       />
 
@@ -86,9 +70,8 @@ export default function App() {
             {/* 2. Custom-Design & Bespoke Commission Emphasis */}
             <CustomDesignSection onScrollToForm={handleScrollToForm} />
 
-            {/* 3. Custom Design Enquiry Form with Silent Cloud WhatsApp Dispatch */}
+            {/* 3. Custom Design Enquiry Form with direct WhatsApp sharing to 8639335031 */}
             <EnquiryForm
-              onEnquirySubmitted={refreshEnquiryCount}
               prefillCategory={prefillCategory}
             />
           </div>
@@ -120,17 +103,6 @@ export default function App() {
           handleSelectProductForCustom(title, category);
         }}
       />
-
-      {/* Private Owner Admin Portal Modal (Password protected for Studio Owner only) */}
-      {isAdminOpen && (
-        <AdminPortal
-          isOpen={isAdminOpen}
-          onClose={() => {
-            setIsAdminOpen(false);
-            refreshEnquiryCount();
-          }}
-        />
-      )}
 
     </div>
   );
