@@ -3,40 +3,51 @@ import { Download } from 'lucide-react';
 import InstallModal from './InstallModal';
 
 export default function Navbar({ onGoHome }) {
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [deferredPrompt, setDeferredPrompt] = useState(window.deferredInstallPrompt || null);
   const [isInstallModalOpen, setIsInstallModalOpen] = useState(false);
 
   useEffect(() => {
-    const handleBeforeInstallPrompt = (e) => {
+    // If prompt was captured before component mount
+    if (window.deferredInstallPrompt) {
+      setDeferredPrompt(window.deferredInstallPrompt);
+    }
+
+    const handlePromptReady = () => {
+      setDeferredPrompt(window.deferredInstallPrompt);
+    };
+
+    const handleBeforeInstall = (e) => {
       e.preventDefault();
+      window.deferredInstallPrompt = e;
       setDeferredPrompt(e);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('pwa-install-ready', handlePromptReady);
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+
+    return () => {
+      window.removeEventListener('pwa-install-ready', handlePromptReady);
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+    };
   }, []);
 
-  const handleInstallClick = () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
+  const handleInstallClick = async () => {
+    const promptEvent = deferredPrompt || window.deferredInstallPrompt;
+    
+    if (promptEvent) {
+      try {
+        promptEvent.prompt();
+        const { outcome } = await promptEvent.userChoice;
+        if (outcome === 'accepted') {
           setDeferredPrompt(null);
+          window.deferredInstallPrompt = null;
         }
-      });
+      } catch (err) {
+        console.warn('Direct PWA prompt error:', err);
+        setIsInstallModalOpen(true);
+      }
     } else {
       setIsInstallModalOpen(true);
-    }
-  };
-
-  const handleNativeInstall = () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          setDeferredPrompt(null);
-        }
-      });
     }
   };
 
@@ -72,7 +83,7 @@ export default function Navbar({ onGoHome }) {
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={handleInstallClick}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium bg-[#1C1714] hover:bg-[#332B26] text-white transition-all cursor-pointer shadow-2xs hover:scale-103"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#1C1714] hover:bg-[#332B26] text-white transition-all cursor-pointer shadow-2xs hover:scale-103 active:scale-98"
               id="btn-nav-install"
               title="Install Trevooresin App"
             >
@@ -84,12 +95,12 @@ export default function Navbar({ onGoHome }) {
         </div>
       </header>
 
-      {/* Install Instruction / Prompt Modal */}
+      {/* Install Instruction / Guide Modal */}
       <InstallModal
         isOpen={isInstallModalOpen}
         onClose={() => setIsInstallModalOpen(false)}
-        onNativeInstall={handleNativeInstall}
-        isInstallable={!!deferredPrompt}
+        onNativeInstall={handleInstallClick}
+        isInstallable={!!(deferredPrompt || window.deferredInstallPrompt)}
       />
     </>
   );
