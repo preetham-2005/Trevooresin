@@ -67,6 +67,23 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
     });
   };
 
+  const formatDateDisplay = (dateStr) => {
+    if (!dateStr) return '';
+    try {
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        const year = parts[0];
+        const monthIndex = parseInt(parts[1], 10) - 1;
+        const day = parseInt(parts[2], 10);
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return `${day} ${months[monthIndex]} ${year}`;
+      }
+      return dateStr;
+    } catch {
+      return dateStr;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.clientName.trim() || !formData.phone.trim()) {
@@ -79,25 +96,25 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
 
     const selectedCategory = formData.category || 'Fully Custom Design Piece';
 
-    // 1. Construct formatted WhatsApp message for 8639335031
-    const messageLines = [
-      `Hi Trevooresin! Here is my custom order enquiry:`,
+    // Build clean, natural message without broken unicode symbols
+    const lines = [
+      `Hi Trevooresin! I would like to place a custom order enquiry:`,
       ``,
-      `👤 *Name:* ${formData.clientName.trim()}`,
-      `📞 *Phone / WhatsApp:* ${formData.phone.trim()}`,
-      formData.email.trim() ? `✉️ *Email:* ${formData.email.trim()}` : null,
-      `🎨 *Category:* ${selectedCategory}`,
-      formData.budget ? `💰 *Budget:* ${formData.budget}` : null,
-      formData.neededBy ? `📅 *Needed By (Date):* ${formData.neededBy}` : null,
-      formData.details.trim() ? `📝 *Custom Requirements:* ${formData.details.trim()}` : null,
+      `* Name: ${formData.clientName.trim()}`,
+      `* Contact: ${formData.phone.trim()}`,
+      formData.email.trim() ? `* Email: ${formData.email.trim()}` : null,
+      `* Interested In: ${selectedCategory}`,
+      formData.budget ? `* Budget: ${formData.budget}` : null,
+      formData.neededBy ? `* Needed By: ${formatDateDisplay(formData.neededBy)}` : null,
+      formData.details.trim() ? `* Custom Details: ${formData.details.trim()}` : null,
       ``,
-      `_(Sharing reference photos directly here on WhatsApp)_`
+      `(Sharing reference photos in this chat)`
     ].filter(Boolean);
 
-    const fullMessage = messageLines.join('\n');
+    const fullMessage = lines.join('\n');
     const whatsappUrl = `https://wa.me/8639335031?text=${encodeURIComponent(fullMessage)}`;
 
-    // 2. Save lead locally for backup
+    // Save lead locally for reference
     saveEnquiry({
       ...formData,
       category: selectedCategory
@@ -105,13 +122,13 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
 
     if (onEnquirySubmitted) onEnquirySubmitted();
 
-    // 3. Open WhatsApp directly with 8639335031
+    // Open WhatsApp directly with 8639335031
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
     setIsSubmitting(false);
     setIsSubmitted(true);
 
-    // 4. Auto reset form after 5 seconds
+    // Auto reset form after 5 seconds
     if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
     resetTimerRef.current = setTimeout(() => {
       handleResetForm();
@@ -134,18 +151,18 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
       </div>
 
       {isSubmitted ? (
-        /* EXACT CONFIRMATION MESSAGE */
+        /* CONFIRMATION MESSAGE */
         <div className="rounded-2xl border border-[#E8E1D7] bg-white p-8 sm:p-12 text-center shadow-xs animate-fade-in">
           <div className="w-12 h-12 bg-[#FAF8F5] border border-[#E8E1D7] rounded-full flex items-center justify-center mx-auto mb-3 text-[#1C1714]">
             <CheckCircle2 className="w-6 h-6 text-[#25D366]" />
           </div>
           
           <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#1C1714] mb-2">
-            Details Shared to WhatsApp!
+            Details Sent to WhatsApp!
           </h3>
           
           <p className="text-xs sm:text-sm text-[#524741] font-light max-w-sm mx-auto leading-relaxed">
-            Your custom enquiry has been sent to <strong>863 933 5031</strong>. You can also attach any reference photos directly in the WhatsApp chat.
+            Your custom enquiry has been prepared and opened in WhatsApp for <strong>863 933 5031</strong>.
           </p>
 
           <p className="mt-4 text-[11px] text-[#7C726A]">
