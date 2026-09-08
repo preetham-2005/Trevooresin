@@ -1,20 +1,21 @@
-// Trevooresin Service Worker for Instant PWA Installation
-const CACHE_NAME = 'trevooresin-v4';
-const STATIC_ASSETS = [
+// Trevooresin PWA Service Worker
+const CACHE_NAME = 'trevooresin-pwa-v1';
+const PRECACHE_RESOURCES = [
   '/',
   '/index.html',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png',
-  '/icon-maskable-192.png',
-  '/icon-maskable-512.png',
-  '/apple-touch-icon.png'
+  '/apple-touch-icon.png',
+  '/assets/trevoo_resin_logo.jpg'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS).catch(() => {});
+      return cache.addAll(PRECACHE_RESOURCES).catch((err) => {
+        console.warn('Pre-caching partial error:', err);
+      });
     })
   );
   self.skipWaiting();
@@ -39,12 +40,12 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(
     fetch(event.request)
-      .then((response) => {
-        return response;
+      .then((networkResponse) => {
+        return networkResponse;
       })
       .catch(() => {
-        return caches.match(event.request).then((cached) => {
-          if (cached) return cached;
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) return cachedResponse;
           if (event.request.mode === 'navigate') {
             return caches.match('/index.html');
           }
