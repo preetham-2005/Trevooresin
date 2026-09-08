@@ -9,7 +9,7 @@ export function downloadVCard() {
     'TEL;TYPE=WORK,VOICE:+918639335031',
     'URL;TYPE=Instagram:https://www.instagram.com/trevooresin/',
     'URL;TYPE=Portfolio:https://trevooresin.com',
-    'NOTE:Luxury handcrafted resin art\\, wedding flower preservation\\, geode wall clocks\\, ocean tables\\, personalized nameplates.',
+    'NOTE:Luxury handcrafted resin art\\, wedding flower preservation\\, geode wall clocks\\, custom keepsakes\\, personalized nameplates.',
     'CATEGORIES:Resin Art,Artisan Studio,Wedding Keepsakes',
     'END:VCARD'
   ].join('\r\n');

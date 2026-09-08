@@ -40,12 +40,12 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
 
   const categories = [
     'Festive & Pooja Essentials',
+    'Custom Keychains',
+    'Keepsakes (Fridge Magnets & Car Décor)',
     'Custom Resin Wall Clocks',
     'Milestone Calendars & Keepsakes',
     'Floral Nameplates & Home Décor',
-    'Custom Haldi Platters & Krishna Jhula',
-    'Serving Trays & Custom Fridge Magnets',
-    'Custom Resin Keychains & Mini Keepsakes',
+    'Serving Trays & Platters',
     'Fully Custom Design Piece'
   ];
 
@@ -102,27 +102,28 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
     setIsSubmitting(true);
     setErrorMessage('');
 
-    // 1. Maintain existing database lead storage
+    // 1. Maintain local/database lead storage
     const newLead = saveEnquiry({
       ...formData,
       category: formData.category || 'Fully Custom Design Piece',
       imagePreview
     });
 
-    // 2. Invoke silent server-side Edge Function / Cloud API integration without any client navigation
+    // 2. Invoke silent server-side WhatsApp Business Cloud API integration with reference photo
     sendSilentWhatsAppEnquiry({
       ...formData,
+      imagePreview,
       id: newLead ? newLead.id : Date.now()
     });
 
     setIsSubmitting(false);
 
     if (newLead) {
-      // 3. Immediately display exact success copy: "Thanks for submitting!"
+      // 3. Immediately display exact confirmation message: "Thanks for submitting!"
       setIsSubmitted(true);
       if (onEnquirySubmitted) onEnquirySubmitted();
 
-      // 4. After 5 seconds automatically clear confirmation and reset all form fields
+      // 4. After 5 seconds, automatically clear confirmation and reset form
       if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
       resetTimerRef.current = setTimeout(() => {
         handleResetForm();
@@ -148,7 +149,7 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
       </div>
 
       {isSubmitted ? (
-        /* EXACT SUCCESS COPY */
+        /* EXACT CONFIRMATION MESSAGE */
         <div className="rounded-2xl border border-[#E8E1D7] bg-white p-8 sm:p-12 text-center shadow-xs animate-fade-in">
           <div className="w-12 h-12 bg-[#FAF8F5] border border-[#E8E1D7] rounded-full flex items-center justify-center mx-auto mb-3 text-[#1C1714]">
             <CheckCircle2 className="w-6 h-6" />
@@ -159,11 +160,11 @@ export default function EnquiryForm({ onEnquirySubmitted, prefillCategory = '' }
           </h3>
           
           <p className="text-xs sm:text-sm text-[#524741] font-light max-w-sm mx-auto">
-            We have received your custom order request and will reach out shortly.
+            We have received your custom order request and reference details.
           </p>
 
           <p className="mt-4 text-[11px] text-[#7C726A]">
-            Form will automatically reset in a few seconds...
+            Form will automatically reset in 5 seconds...
           </p>
         </div>
       ) : (

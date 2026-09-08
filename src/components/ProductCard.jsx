@@ -17,6 +17,13 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
   const images = prod.images || (prod.image ? [prod.image] : []);
   const hasMultipleImages = images.length > 1;
 
+  // Active slide specific details
+  const activeDetails = prod.imageDetails && prod.imageDetails[currentImgIndex] ? prod.imageDetails[currentImgIndex] : null;
+  const currentTitle = activeDetails?.title || prod.name;
+  const currentDescription = activeDetails?.description || prod.description;
+  const currentDimensions = activeDetails?.dimensions || prod.dimensions;
+  const currentPrice = activeDetails?.priceText || prod.priceText;
+
   // Touch swipe support for mobile
   const touchStartXRef = useRef(null);
   const touchEndXRef = useRef(null);
@@ -59,9 +66,11 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
     if (onOpenLightbox) {
       onOpenLightbox({
         ...prod,
-        title: prod.name,
+        title: currentTitle,
+        description: currentDescription,
         image: images[currentImgIndex],
         images: images,
+        imageDetails: prod.imageDetails,
         initialIndex: currentImgIndex
       });
     }
@@ -79,9 +88,10 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
         onTouchEnd={handleTouchEnd}
       >
         <img 
+          key={currentImgIndex}
           src={images[currentImgIndex]} 
-          alt={`${prod.name} ${hasMultipleImages ? `(Image ${currentImgIndex + 1})` : ''}`}
-          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
+          alt={`${currentTitle} ${hasMultipleImages ? `(Photo ${currentImgIndex + 1})` : ''}`}
+          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500 animate-fade-in" 
         />
         
         {/* Category Pill */}
@@ -104,15 +114,15 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
           <>
             <button
               onClick={handlePrevImage}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all shadow-xs z-20 cursor-pointer"
-              aria-label="Previous image"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all shadow-xs z-20 cursor-pointer hover:scale-105"
+              aria-label="Previous photo"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={handleNextImage}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all shadow-xs z-20 cursor-pointer"
-              aria-label="Next image"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-all shadow-xs z-20 cursor-pointer hover:scale-105"
+              aria-label="Next photo"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -126,7 +136,7 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
                   className={`h-1.5 rounded-full transition-all cursor-pointer ${
                     currentImgIndex === idx ? 'w-3.5 bg-white' : 'w-1.5 bg-white/50'
                   }`}
-                  aria-label={`Go to slide ${idx + 1}`}
+                  aria-label={`Go to photo ${idx + 1}`}
                 />
               ))}
             </div>
@@ -139,15 +149,15 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
         )}
       </div>
 
-      {/* Product Details */}
+      {/* Product Details - Dynamically synced with active photo */}
       <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#1C1714] mb-2 leading-snug">
-            {prod.name}
+          <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#1C1714] mb-2 leading-snug transition-opacity duration-200">
+            {currentTitle}
           </h3>
           
-          <p className="text-xs sm:text-sm text-[#524741] leading-relaxed mb-4 font-light">
-            {prod.description}
+          <p className="text-xs sm:text-sm text-[#524741] leading-relaxed mb-4 font-light transition-opacity duration-200 min-h-[40px]">
+            {currentDescription}
           </p>
 
           {/* Pricing & Specification Box */}
@@ -160,12 +170,12 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
                 <span className="font-medium">{prod.craftingTime}</span>
               </div>
             )}
-            {prod.dimensions && (
+            {currentDimensions && (
               <div className="flex items-center justify-between">
                 <span className="text-[#7C726A] flex items-center gap-1">
                   <Ruler className="w-3.5 h-3.5" /> Sizing:
                 </span>
-                <span className="font-medium">{prod.dimensions}</span>
+                <span className="font-medium">{currentDimensions}</span>
               </div>
             )}
             {/* Price Line */}
@@ -174,7 +184,7 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
                 <Tag className="w-3.5 h-3.5" /> Pricing:
               </span>
               <span className="text-xs sm:text-sm font-medium text-[#1C1714]">
-                {prod.priceText || 'Price depends on customisation'}
+                {currentPrice || 'Price depends on customisation'}
               </span>
             </div>
           </div>
@@ -199,7 +209,7 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
           {/* Enquire Now on WhatsApp Button */}
           <a
-            href={getProductWhatsAppLink(prod.name)}
+            href={getProductWhatsAppLink(currentTitle)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full bg-[#1C1714] hover:bg-[#332B26] text-white font-medium text-xs shadow-xs transition-all"
@@ -211,7 +221,7 @@ export default function ProductCard({ prod, onSelectProductForCustomOrder, onOpe
 
           {/* Request Custom Variation */}
           <button
-            onClick={() => onSelectProductForCustomOrder(prod.name, prod.category)}
+            onClick={() => onSelectProductForCustomOrder(currentTitle, prod.category)}
             className="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full bg-white hover:bg-[#FAF8F5] text-[#1C1714] font-medium text-xs transition-colors cursor-pointer border border-[#E8DFC8]"
           >
             <Sparkles className="w-3.5 h-3.5 text-[#7C726A]" />

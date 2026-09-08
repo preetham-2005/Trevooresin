@@ -54,13 +54,8 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Location */}
-        <p className="text-xs text-[#7C726A] font-normal tracking-wide">
-          Hyderabad, India
-        </p>
-
         {/* Copyright */}
-        <p className="mt-1.5 text-xs text-[#7C726A]/80 font-light">
+        <p className="mt-2 text-xs text-[#7C726A]/80 font-light">
           © {new Date().getFullYear()} Trevooresin. Every piece is one of one.
         </p>
 

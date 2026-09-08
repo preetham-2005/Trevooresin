@@ -19,7 +19,7 @@ export default function CustomDesignSection({ onScrollToForm }) {
 
         {/* Narrative Copy */}
         <p className="mx-auto max-w-xl text-xs sm:text-sm leading-relaxed text-[#2D3D2A] font-light mb-6">
-          Wedding favours, house-warming gifts, a table built around your living room, or a keepsake holding flowers from a day you never want to forget — every piece is poured by hand, tailored to you.
+          Wedding favours, house-warming gifts, custom nameplates, or a keepsake holding flowers from a day you never want to forget — every piece is poured by hand, tailored to you.
         </p>
 
         {/* Action Buttons */}

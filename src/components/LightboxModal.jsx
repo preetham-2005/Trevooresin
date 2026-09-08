@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, MessageCircle, Sparkles, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { X, MessageCircle, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getProductWhatsAppLink } from '../data/products';
 
 export default function LightboxModal({ item, onClose, onCommissionLikeThis }) {
@@ -43,6 +43,9 @@ export default function LightboxModal({ item, onClose, onCommissionLikeThis }) {
   };
 
   const currentImageSrc = images[currentIndex] || item.image;
+  const activeImageDetails = item.imageDetails && item.imageDetails[currentIndex] ? item.imageDetails[currentIndex] : null;
+  const currentTitle = activeImageDetails?.title || item.title || item.name;
+  const currentDescription = activeImageDetails?.description || item.description;
 
   return (
     <div 
@@ -62,12 +65,13 @@ export default function LightboxModal({ item, onClose, onCommissionLikeThis }) {
           <X className="w-5 h-5" />
         </button>
 
-        {/* High Resolution Image Container - Scaled according to natural image size */}
+        {/* High Resolution Image Container */}
         <div className="relative flex-1 bg-black flex items-center justify-center min-h-[50vh] max-h-[70vh] overflow-hidden p-2">
           <img
+            key={currentIndex}
             src={currentImageSrc}
-            alt={`${item.title || item.name} (Photo ${currentIndex + 1})`}
-            className="w-auto h-auto max-w-full max-h-[66vh] object-contain rounded-xl shadow-2xl transition-all duration-300 select-none"
+            alt={`${currentTitle} (Photo ${currentIndex + 1})`}
+            className="w-auto h-auto max-w-full max-h-[66vh] object-contain rounded-xl shadow-2xl transition-all duration-300 select-none animate-fade-in"
           />
 
           {/* Previous / Next Controls if multiple photos */}
@@ -96,9 +100,9 @@ export default function LightboxModal({ item, onClose, onCommissionLikeThis }) {
           )}
         </div>
 
-        {/* Caption & Actions Footer */}
+        {/* Caption & Actions Footer with dynamic photo title and description */}
         <div className="p-4 sm:p-5 bg-[#1C140F] border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-center sm:text-left">
+          <div className="text-center sm:text-left max-w-lg">
             <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
               <span className="text-[10px] uppercase tracking-widest text-[#D4AF37] font-bold px-2 py-0.5 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30">
                 {item.category}
@@ -106,13 +110,18 @@ export default function LightboxModal({ item, onClose, onCommissionLikeThis }) {
               <span className="text-xs text-white/60">Full High-Res View</span>
             </div>
             <h3 className="font-serif text-lg sm:text-xl font-bold text-white leading-tight">
-              {item.title || item.name}
+              {currentTitle}
             </h3>
+            {currentDescription && (
+              <p className="text-xs text-[#FAF7F2]/80 font-light mt-1 line-clamp-2">
+                {currentDescription}
+              </p>
+            )}
           </div>
 
-          <div className="flex items-center gap-2.5 w-full sm:w-auto">
+          <div className="flex items-center gap-2.5 w-full sm:w-auto shrink-0">
             <a
-              href={getProductWhatsAppLink(item.title || item.name)}
+              href={getProductWhatsAppLink(currentTitle)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs shadow-md transition-transform hover:scale-[1.02]"
@@ -125,7 +134,7 @@ export default function LightboxModal({ item, onClose, onCommissionLikeThis }) {
               <button
                 onClick={() => {
                   onClose();
-                  onCommissionLikeThis(item.title || item.name, item.category);
+                  onCommissionLikeThis(currentTitle, item.category);
                 }}
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full bg-[#2C1F18] hover:bg-[#38271e] text-[#F7E8C4] border border-[#D4AF37]/40 font-semibold text-xs transition-colors cursor-pointer"
               >

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import ExploreBanner from './components/ExploreBanner';
 import CustomDesignSection from './components/CustomDesignSection';
 import EnquiryForm from './components/EnquiryForm';
 import CreationsCatalogue from './components/CreationsCatalogue';
 import AdminPortal from './components/AdminPortal';
 import LightboxModal from './components/LightboxModal';
 import Footer from './components/Footer';
-import FloatingActions from './components/FloatingActions';
-import InstallPromptBanner from './components/InstallPromptBanner';
 import { getEnquiries } from './utils/storage';
 
 export default function App() {
@@ -86,13 +83,10 @@ export default function App() {
             {/* 1. Hero / Brand Intro with Call, WhatsApp & Explore button */}
             <Hero onExploreClick={handleExploreCreations} />
 
-            {/* 2. Prominent Explore Our Creations CTA Banner */}
-            <ExploreBanner onExploreClick={handleExploreCreations} />
-
-            {/* 3. Custom-Design & Bespoke Commission Emphasis */}
+            {/* 2. Custom-Design & Bespoke Commission Emphasis */}
             <CustomDesignSection onScrollToForm={handleScrollToForm} />
 
-            {/* 4. Custom Design Enquiry Form with Secure Silent Storage */}
+            {/* 3. Custom Design Enquiry Form with Silent Cloud WhatsApp Dispatch */}
             <EnquiryForm
               onEnquirySubmitted={refreshEnquiryCount}
               prefillCategory={prefillCategory}
@@ -118,12 +112,6 @@ export default function App() {
       {/* Studio Footer */}
       <Footer />
 
-      {/* Persistent Floating WhatsApp Quick-Action */}
-      <FloatingActions />
-
-      {/* Bottom Floating Install Prompt Banner */}
-      <InstallPromptBanner />
-
       {/* Fullscreen Photo Lightbox Modal */}
       <LightboxModal
         item={lightboxItem}
@@ -133,7 +121,7 @@ export default function App() {
         }}
       />
 
-      {/* Private Owner Admin Portal Modal */}
+      {/* Private Owner Admin Portal Modal (Password protected for Studio Owner only) */}
       {isAdminOpen && (
         <AdminPortal
           isOpen={isAdminOpen}

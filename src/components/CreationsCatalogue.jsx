@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { 
   ArrowLeft, 
-  ChevronRight,
-  Sparkles,
-  Layers
+  ChevronRight, 
+  Sparkles, 
+  Layers 
 } from 'lucide-react';
 import { 
   PRODUCT_CATEGORIES, 
@@ -30,9 +30,9 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
   return (
     <div className="min-h-screen pb-20 bg-[#FAF5EC] w-full max-w-full overflow-x-hidden">
       
-      {/* Top Breadcrumb / Action Bar - Non-sticky so it NEVER overlaps headings */}
+      {/* Top Breadcrumb / Action Bar */}
       <div className="bg-[#FAF5EC] border-b border-[#E8DFC8] w-full">
-        <div className="max-w-5xl mx-auto px-3 sm:px-6 py-3 flex items-center justify-between gap-2">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
           <button
             onClick={onBackToHome}
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-[#F5EFE3] text-[#1C1714] text-xs sm:text-sm font-semibold border border-[#E8DFC8] shadow-2xs transition-all cursor-pointer shrink-0"
@@ -60,7 +60,7 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
           Our Handcrafted Resin Creations
         </h1>
         <p className="text-xs sm:text-sm text-[#524741] max-w-xl mx-auto font-light leading-relaxed">
-          From sacred pooja thalis and Krishna jhulas to wedding varmala preservation, wall clocks, and bespoke keepsakes—explore our complete studio collection.
+          From sacred pooja thalis and Krishna jhulas to wedding floral keepsakes, wall clocks, and bespoke fridge magnets—explore our complete studio catalogue.
         </p>
       </section>
 
@@ -124,12 +124,12 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
       </section>
 
       {/* ======================================================== */}
-      {/* SECTION 2: VIEW ALL PRODUCTS & SERVICES (CATALOGUE)      */}
+      {/* SECTION 2: VIEW ALL PRODUCTS & SERVICES (SINGLE CATALOGUE)*/}
       {/* ======================================================== */}
       <section id="view-all-products" className="px-4 sm:px-6 max-w-5xl mx-auto my-12 pt-8 border-t border-[#E8DFC8]">
         <div className="text-center max-w-xl mx-auto mb-6">
           <span className="text-[11px] uppercase tracking-widest text-[#7C726A] font-medium block mb-1">
-            Browse & Order
+            The Collection
           </span>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-normal text-[#1C1714] mb-2">
             View All Products & Services
@@ -139,24 +139,26 @@ export default function CreationsCatalogue({ onBackToHome, onSelectProductForCus
           </p>
         </div>
 
-        {/* Minimal Category Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none justify-start sm:justify-center">
-          {PRODUCT_CATEGORIES.map((cat, idx) => (
-            <button
-              key={idx}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
-                selectedCategory === cat
-                  ? 'bg-[#1C1714] text-white shadow-xs'
-                  : 'bg-white text-[#524741] border border-[#E8DFC8] hover:bg-[#FAF5EC]'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        {/* Category Filter Pills - Fixed horizontal scroll with proper padding so NO pill is ever clipped */}
+        <div className="w-full max-w-full overflow-hidden pb-4 mb-8">
+          <div className="flex items-center gap-2 overflow-x-auto px-4 sm:px-2 py-1 scrollbar-none justify-start sm:justify-center w-full">
+            {PRODUCT_CATEGORIES.map((cat, idx) => (
+              <button
+                key={idx}
+                onClick={() => setSelectedCategory(cat)}
+                className={`shrink-0 px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
+                  selectedCategory === cat
+                    ? 'bg-[#1C1714] text-white shadow-xs'
+                    : 'bg-white text-[#524741] border border-[#E8DFC8] hover:bg-[#FAF5EC]'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Products Grid */}
+        {/* Products Grid - Entitled in Single Catalogue */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredProducts.map((prod) => (
             <ProductCard

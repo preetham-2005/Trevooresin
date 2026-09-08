@@ -23,7 +23,7 @@ export default function Hero({ onExploreClick }) {
           Trevooresin
         </h1>
         <p className="mt-1.5 text-[11px] sm:text-xs uppercase tracking-[0.25em] text-[#7C726A] font-medium">
-          Handcrafted Luxury Resin Studio • Hyderabad, India
+          Handcrafted Luxury Resin Studio
         </p>
       </section>
 
@@ -34,7 +34,7 @@ export default function Hero({ onExploreClick }) {
           {/* Left Hero Column: Intro & Actions */}
           <div className="text-center md:text-left">
             <p className="text-sm sm:text-base leading-relaxed text-[#524741] max-w-md mx-auto md:mx-0 font-light mb-6">
-              Liquid art, poured by hand. We craft heirloom resin pieces — trays, coasters, clocks, tables and keepsakes — each one poured once, and never repeated.
+              Liquid art, poured by hand. We craft heirloom resin pieces — trays, coasters, clocks, and keepsakes — each one poured once, and never repeated.
             </p>
 
             {/* Actions: Call, WhatsApp, Explore Our Creations Button */}
